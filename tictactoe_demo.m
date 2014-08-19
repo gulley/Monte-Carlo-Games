@@ -1,5 +1,5 @@
 %% Tic Tac Toe Demo
-% I can play a game manually like this.
+% You can play a game manually like this.
 
 %% Initialize
 g = game
@@ -7,16 +7,26 @@ g.displayBoard
 
 %% X Move 1
 clc
-g = makeMove(g,5);
+side = 1;
+pos = 5;
+g = makeMove(g,pos,side);
 
 %% O Move 1
-g = makeMove(g,1,2);
+pos = 1;
+side = game.toggleSides(side);
+g = makeMove(g,pos,side);
 
 %% X Move 2
-g = makeMove(g,2);
+pos = 2;
+side = game.toggleSides(side);
+g = makeMove(g,pos,side);
 
 %% O Move 2
-g = makeMove(g,7,2);
+pos = 7;
+side = game.toggleSides(side);
+g = makeMove(g,pos,side);
 
 %% X Move 3
-g = makeMove(g,8);
+pos = 8;
+side = game.toggleSides(side);
+g = makeMove(g,pos,side);
