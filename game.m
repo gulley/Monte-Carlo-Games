@@ -43,8 +43,9 @@ classdef game
                         case 2
                             str = 'O';
                         otherwise
-                            n = sub2ind([3, 3],r,c);
-                            str = num2str(n);
+                            % n = sub2ind([3, 3],r,c);
+                            % str = num2str(n);
+                            str = ' ';
                     end
                     
                     if c>1
@@ -90,30 +91,34 @@ classdef game
             board0 = g.boardstate;
             side = game.whoseMove(board0);
             boardmask = game.possibleMoves(board0);
+            
             poslist = find(boardmask);
-            outcomelist = zeros(length(poslist),3);
-            ngames = 100;
             
-            % Iterate across all legal moves
-            % At each point, measure how many wins and losses we can expect
-            
-            for i = 1:length(poslist)
-                boardstate = game.move(board0,poslist(i),side);
-                r = game.playManyGames(boardstate);
-                outcomelist(i,:) = r;
+            if length(poslist)==0
+                % No moves are possible.
+                fprintf('No moves remain. Game is over.\n')
+                return
+                
+            elseif length(poslist)==1
+                % One move is possible. Make it.
+                pos = poslist;
+                
+            else
+                pos = game.pickBestMove(board0,poslist,side);
+                
             end
-            
-            % Column 3 is the ties
-            % We want to maximize the chance of winning or tying (i.e.
-            % minimize the chance of losing).
-            outcomelist(:,1) = outcomelist(:,1) + outcomelist(:,3);
-            outcomelist(:,2) = outcomelist(:,2) + outcomelist(:,3);
-            [mx,ix] = max(outcomelist);
-            
-            % Pick the most favorable outcome
-            pos = poslist(ix(side));
             g = makeMove(g,pos,side);
             
+        end
+        
+        % =================================================================
+        function tf = isOver(g)
+            if game.isGameOver(g.boardstate)
+                tf = true;
+            else
+                tf = false;
+            end
+                
         end
         
     end % methods
@@ -168,7 +173,7 @@ classdef game
             % If there are the same number of Xs and Os, then X goes next.
             if sum(b(:)==1) == sum(b(:)==2)
                 side = 1;
-            else 
+            else
                 side = 2;
             end
         end
@@ -181,7 +186,7 @@ classdef game
             
             % Pick exactly one of the legal moves
             pos = poslist(randi(length(poslist),1,1));
-
+            
         end
         
         % =================================================================
@@ -190,6 +195,31 @@ classdef game
             boardstateOut(pos) = side;
         end
         
+        % =================================================================
+        function pos = pickBestMove(board0,poslist,side)
+            
+            outcomelist = zeros(length(poslist),3);
+            ngames = 100;
+            
+            % Iterate across all legal moves
+            % At each point, measure how many wins and losses we can expect
+            
+            for i = 1:length(poslist)
+                boardstate = game.move(board0,poslist(i),side);
+                r = game.playManyGames(boardstate);
+                outcomelist(i,:) = r;
+            end
+            
+            % Column 3 is the ties
+            % We want to maximize the chance of winning or tying (i.e.
+            % minimize the chance of losing).
+            outcomelist(:,1) = outcomelist(:,1) + outcomelist(:,3);
+            outcomelist(:,2) = outcomelist(:,2) + outcomelist(:,3);
+            [~,ix] = max(outcomelist);
+            
+            % Pick the most favorable outcome
+            pos = poslist(ix(side));
+        end
         
         % =================================================================
         function rTotals = playManyGames(b0,nGames)

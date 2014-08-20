@@ -7,4 +7,6 @@ g.displayBoard
 
 %%
 % Repeat this command until one side wins or there's a tie.
-g = autoMove(g);
+while ~g.isOver
+    g = autoMove(g);
+end
