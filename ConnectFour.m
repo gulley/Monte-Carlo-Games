@@ -1,30 +1,29 @@
-classdef TicTacToe < handle
+classdef ConnectFour < handle
+    % Connect Four
+    % The Connect Four board is managed as a 1x42 vector
+    
+    % boardstate:  1x42 vector with 0=empty, 1=X, 2=O
+    % boardmask:   1x7 vector with logical to indicate open moves
+    % poslist:     column vector of board positions (1-7 index into board)
+    % pos:         a single position from the poslist
+    % outcomelist: associates wins and ties with each possible move
     
     properties
         boardstate
     end
     
     methods
-        % Tic Tac Toe
-        % The Tic Tac Toe board is managed as a 1x9 vector
         
-        % boardstate:  1x9 vector with 0=empty, 1=X, 2=O
-        % boardmask:   1x9 vector with logical to indicate open moves
-        % poslist:     column vector of board positions (1-9 index into board)
-        % pos:         a single position from the poslist
-        % outcomelist: associates wins and ties with each possible move
-        
-        % =================================================================
-        function g = TicTacToe(initialBoardstate)
+        function g = ConnectFour(initialBoardstate)
             % Constructor
             if nargin < 1
-                initialBoardstate = zeros(1,9);
+                initialBoardstate = zeros(1,42);
             end
             g.boardstate = initialBoardstate;
         end
         
         function newGame = copy(game)
-            newGame = TicTacToe(game.boardstate);
+            newGame = ConnectFour(game.boardstate);
         end
         
         function showBoard(g,style)
@@ -43,29 +42,23 @@ classdef TicTacToe < handle
         end
         
         function showBoardText(g)
-    b = reshape(g.boardstate,3,3);
+            
+            b = reshape(g.boardstate,6,7);
             
             fprintf('\n');
-            for r=1:3
+            for r=1:6
                 
-                if r>1
-                    fprintf('-----------\n');
-                end
-                
-                for c=1:3
+                for c=1:7
                     switch b(r,c)
                         case 1
                             str = 'X';
                         case 2
                             str = 'O';
                         otherwise
-                            str = ' ';
+                            str = '.';
                     end
                     
-                    if c>1
-                        fprintf('|');
-                    end
-                    fprintf(' %s ',str);
+                    fprintf('%s',str);
                     
                 end
                 fprintf('\n');
@@ -75,30 +68,29 @@ classdef TicTacToe < handle
         
         function showBoardGraphical(g)
             
-            b = reshape(g.boardstate,3,3);
+            b = reshape(g.boardstate,6,7);
             
             cla
-            for r=1:3
-                for c=1:3
+            for r=1:6
+                for c=1:7
                     switch b(r,c)
                         case 1
-                            markerStr = 'x';
-                            colorStr = 'black';
+                            markerStr = '.';
+                            colorStr = 'red';
                         case 2
-                            markerStr = 'o';
-                            colorStr = 'blue';
+                            markerStr = '.';
+                            colorStr = 'black';
                         otherwise 
                             markerStr = 'none';
                             colorStr = 'white';
                     end
-                    line(c-0.5,r-0.5,'Marker',markerStr,'MarkerSize',50, ...
-                        'MarkerEdgeColor',colorStr);
+                    line(c-0.5,r-0.5,'Marker',markerStr,'MarkerSize',90,'MarkerEdgeColor',colorStr);
                     
                 end
             end
             axis ij
-            axis([0 3 0 3])
-            set(gca,'XTick',0:3,'YTick',0:3)
+            axis([0 7 0 6])
+            set(gca,'XTick',0:7,'YTick',0:6)
             set(gca,'XTickLabel',[],'YTickLabel',[])
             grid on
             box on
@@ -117,43 +109,66 @@ classdef TicTacToe < handle
                 fprintf('Tie game.\n')
             end
         end
-                
+        
         function makeMove(game, pos, side)
             if nargin < 3
                 side = 1;
             end
             
-            if ~game.boardstate(pos)
-                game.boardstate(pos) = side;
-            else
-                fprintf('That position is occupied. You can''t move there.')
+            % The piece is dropped into the Connect Four grid and falls to
+            % the bottom.
+            
+            b = reshape(game.boardstate,6,7);
+            
+            if prod(b(:,pos))
+                fprintf('That column is full. You can''t move there.')
                 game.showBoard;
                 return
             end
+            
+            emptySlots = find(b(:,pos)==0);
+            b(emptySlots(end),pos) = side;
+            game.boardstate = b(:);
+            
         end
         
         function moves = possibleMoves(game)
-            % Where are the legal moves?            
-            moves = find(game.boardstate==0);            
+            % Where are the legal moves?
+            
+            b = reshape(game.boardstate,6,7);
+            % Any column that still has empty space in it represents a
+            % legal move.
+            moves = find(prod(b)==0);
         end
         
         function r = isGameOver(game)
+            b = reshape(game.boardstate,6,7);
             
-            ix = [ ...
-                1 4 7 1 2 3 1 3
-                2 5 8 4 5 6 5 5
-                3 6 9 7 8 9 9 7];
+            % Code courtesy of @bmtran
+            % See http://www.mathworks.com/matlabcentral/cody/problems/90-connect-four-win-checker/solutions/2314
+            r = 0;
+            directions = { ...
+                [1;1;1;1], ...
+                [1,1,1,1], ...
+                [0 0 0 1
+                0 0 1 0
+                0 1 0 0
+                1 0 0 0], ...
+                [1 0 0 0
+                0 1 0 0
+                0 0 1 0
+                0 0 0 1]};
+            for player = 1:2
+                for direction = directions
+                    if any(any( conv2(b.*(b==player),direction{1},'same') == 4*player ))
+                        r = player;
+                        return
+                    end
+                end
+            end
             
-            s = game.boardstate(ix);
-            
-            if any(prod(s==1))
-                r = 1;
-            elseif any(prod(s==2))
-                r = 2;
-            elseif ~any(game.boardstate(:)==0)
+            if ~any(game.boardstate(:)==0)
                 r = 3;
-            else
-                r = 0;
             end
             
         end

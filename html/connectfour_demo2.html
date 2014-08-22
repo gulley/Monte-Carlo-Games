@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>Tic Tac Toe Demo</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-08-21"><meta name="DC.source" content="tictactoe_demo.m"><style type="text/css">
+      --><title>Tic Tac Toe Demo</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-08-22"><meta name="DC.source" content="connectfour_demo2.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,116 +66,37 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>Tic Tac Toe Demo</h1><!--introduction--><p>You can play a game manually like this.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Initialize</a></li><li><a href="#2">X Move 1</a></li><li><a href="#3">O Move 1</a></li><li><a href="#4">X Move 2</a></li><li><a href="#5">O Move 2</a></li><li><a href="#6">X Move 3</a></li></ul></div><h2>Initialize<a name="1"></a></h2><pre class="codeinput">g = TicTacToe
-g.showResult
+  </style></head><body><div class="content"><h1>Tic Tac Toe Demo</h1><!--introduction--><p>You play robot against robot like this.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Initialize</a></li></ul></div><h2>Initialize<a name="1"></a></h2><pre class="codeinput">g = ConnectFour
+g.showBoard
 </pre><pre class="codeoutput">
 g = 
 
-  TicTacToe with properties:
+  ConnectFour with properties:
 
-    boardstate: [0 0 0 0 0 0 0 0 0]
+    boardstate: [1x42 double]
 
-
-   |   |   
------------
-   |   |   
------------
-   |   |   
-
-</pre><h2>X Move 1<a name="2"></a></h2><pre class="codeinput">side = 1;
-pos = 5;
-makeMove(g,pos,side);
-g.showResult
-</pre><pre class="codeoutput">
-   |   |   
------------
-   | X |   
------------
-   |   |   
-
-</pre><h2>O Move 1<a name="3"></a></h2><pre class="codeinput">pos = 1;
-side = 2;
-makeMove(g,pos,side);
-g.showResult
-</pre><pre class="codeoutput">
- O |   |   
------------
-   | X |   
------------
-   |   |   
-
-</pre><h2>X Move 2<a name="4"></a></h2><pre class="codeinput">pos = 2;
-side = 1;
-makeMove(g,pos,side);
-g.showResult
-</pre><pre class="codeoutput">
- O |   |   
------------
- X | X |   
------------
-   |   |   
-
-</pre><h2>O Move 2<a name="5"></a></h2><pre class="codeinput">pos = 7;
-side = 2;
-makeMove(g,pos,side);
-g.showResult
-</pre><pre class="codeoutput">
- O |   | O 
------------
- X | X |   
------------
-   |   |   
-
-</pre><h2>X Move 3<a name="6"></a></h2><pre class="codeinput">pos = 8;
-side = 1;
-makeMove(g,pos,side);
-g.showResult
-</pre><pre class="codeoutput">
- O |   | O 
------------
- X | X | X 
------------
-   |   |   
-
-X wins.
-</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+</pre><img vspace="5" hspace="5" src="connectfour_demo2_01.png" alt=""> <p>Repeat this command until one side wins or there's a tie.</p><pre class="codeinput"><span class="keyword">while</span> ~g.isGameOver
+    autoMove(g);
+    g.showResult;
+    snapnow
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="connectfour_demo2_02.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_03.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_04.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_05.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_06.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_07.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_08.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_09.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_10.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_11.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_12.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_13.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_14.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_15.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_16.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_17.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_18.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_19.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_20.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_21.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_22.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_23.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_24.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_25.png" alt=""> <img vspace="5" hspace="5" src="connectfour_demo2_26.png" alt=""> <pre class="codeoutput">O wins.
+</pre><img vspace="5" hspace="5" src="connectfour_demo2_27.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Tic Tac Toe Demo
-% You can play a game manually like this.
+% You play robot against robot like this.
 
 %% Initialize
-g = TicTacToe
-g.showResult
+g = ConnectFour
+g.showBoard
 
-%% X Move 1
-side = 1;
-pos = 5;
-makeMove(g,pos,side);
-g.showResult
-
-%% O Move 1
-pos = 1;
-side = 2;
-makeMove(g,pos,side);
-g.showResult
-
-%% X Move 2
-pos = 2;
-side = 1;
-makeMove(g,pos,side);
-g.showResult
-
-%% O Move 2
-pos = 7;
-side = 2;
-makeMove(g,pos,side);
-g.showResult
-
-%% X Move 3
-pos = 8;
-side = 1;
-makeMove(g,pos,side);
-g.showResult
+%%
+% Repeat this command until one side wins or there's a tie.
+while ~g.isGameOver
+    autoMove(g);
+    g.showResult;
+    snapnow
+end
 
 ##### SOURCE END #####
 --></body></html>

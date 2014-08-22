@@ -2,7 +2,7 @@
 % You play robot against robot like this.
 
 %% Initialize
-g = TicTacToe
+g = ConnectFour
 g.showBoard
 
 %%

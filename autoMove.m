@@ -36,9 +36,11 @@ function pos = pickBestMove(game,poslist,side)
         outcomelist(i,:) = r;
     end
     
-    % Column 3 is the ties
-    % We want to maximize the chance of winning or tying (i.e.
-    % minimize the chance of losing).
+    % Column 1 is the number of side 1 wins
+    % Column 2 is the number of side 2 wins
+    % Column 3 is the number of ties
+    % We want to maximize the chance of winning or tying
+    % (i.e. minimize the chance of losing).
     outcomelist(:,1) = outcomelist(:,1) + outcomelist(:,3);
     outcomelist(:,2) = outcomelist(:,2) + outcomelist(:,3);
     [~,ix] = max(outcomelist);
@@ -56,7 +58,7 @@ function rTotals = playManyGames(game,nGames)
     % Output r is a 1x3 vector: [1 wins, 2 wins, draw]
     
     if nargin<2
-        nGames = 100;
+        nGames = 50;
     end
     
     rTotals = [0 0 0];
