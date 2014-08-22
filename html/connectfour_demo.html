@@ -66,102 +66,38 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>Tic Tac Toe Demo</h1><!--introduction--><p>You can play a game manually like this.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Initialize</a></li><li><a href="#2">X Move 1</a></li><li><a href="#3">O Move 1</a></li><li><a href="#4">X Move 2</a></li><li><a href="#5">O Move 2</a></li><li><a href="#6">X Move 3</a></li><li><a href="#7">O Move 3</a></li><li><a href="#8">X Move 4</a></li></ul></div><h2>Initialize<a name="1"></a></h2><pre class="codeinput">g = ConnectFour;
+  </style></head><body><div class="content"><h1>Tic Tac Toe Demo</h1><!--introduction--><p>You can play a game manually like this.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Initialize</a></li><li><a href="#2">Side 1 Move 1</a></li><li><a href="#3">Side 2 Move 1</a></li><li><a href="#4">Side 1 Move 2</a></li><li><a href="#5">Side 2 Move 2</a></li><li><a href="#6">Side 1 Move 3</a></li><li><a href="#7">Side 2 Move 3</a></li><li><a href="#8">Side 1 Move 4</a></li></ul></div><h2>Initialize<a name="1"></a></h2><pre class="codeinput">g = ConnectFour;
 g.showBoard;
-</pre><pre class="codeoutput">
-.......
-.......
-.......
-.......
-.......
-.......
-
-</pre><h2>X Move 1<a name="2"></a></h2><pre class="codeinput">side = 1;
+</pre><img vspace="5" hspace="5" src="connectfour_demo_01.png" alt=""> <h2>Side 1 Move 1<a name="2"></a></h2><pre class="codeinput">side = 1;
 pos = 4;
 makeMove(g,pos,side);
 g.showResult
-</pre><pre class="codeoutput">
-.......
-.......
-.......
-.......
-.......
-...X...
-
-</pre><h2>O Move 1<a name="3"></a></h2><pre class="codeinput">side = 2;
+</pre><img vspace="5" hspace="5" src="connectfour_demo_02.png" alt=""> <h2>Side 2 Move 1<a name="3"></a></h2><pre class="codeinput">side = 2;
 pos = 3;
 makeMove(g,pos,side);
 g.showResult
-</pre><pre class="codeoutput">
-.......
-.......
-.......
-.......
-.......
-..OX...
-
-</pre><h2>X Move 2<a name="4"></a></h2><pre class="codeinput">side = 1;
+</pre><img vspace="5" hspace="5" src="connectfour_demo_03.png" alt=""> <h2>Side 1 Move 2<a name="4"></a></h2><pre class="codeinput">side = 1;
 pos = 4;
 makeMove(g,pos,side);
 g.showResult
-</pre><pre class="codeoutput">
-.......
-.......
-.......
-.......
-...X...
-..OX...
-
-</pre><h2>O Move 2<a name="5"></a></h2><pre class="codeinput">side = 2;
+</pre><img vspace="5" hspace="5" src="connectfour_demo_04.png" alt=""> <h2>Side 2 Move 2<a name="5"></a></h2><pre class="codeinput">side = 2;
 pos = 2;
 makeMove(g,pos,side);
 g.showResult
-</pre><pre class="codeoutput">
-.......
-.......
-.......
-.......
-...X...
-.OOX...
-
-</pre><h2>X Move 3<a name="6"></a></h2><pre class="codeinput">side = 1;
+</pre><img vspace="5" hspace="5" src="connectfour_demo_05.png" alt=""> <h2>Side 1 Move 3<a name="6"></a></h2><pre class="codeinput">side = 1;
 pos = 4;
 makeMove(g,pos,side);
 g.showResult
-</pre><pre class="codeoutput">
-.......
-.......
-.......
-...X...
-...X...
-.OOX...
-
-</pre><h2>O Move 3<a name="7"></a></h2><pre class="codeinput">side = 2;
+</pre><img vspace="5" hspace="5" src="connectfour_demo_06.png" alt=""> <h2>Side 2 Move 3<a name="7"></a></h2><pre class="codeinput">side = 2;
 pos = 1;
 makeMove(g,pos,side);
 g.showResult
-</pre><pre class="codeoutput">
-.......
-.......
-.......
-...X...
-...X...
-OOOX...
-
-</pre><h2>X Move 4<a name="8"></a></h2><pre class="codeinput">side = 1;
+</pre><img vspace="5" hspace="5" src="connectfour_demo_07.png" alt=""> <h2>Side 1 Move 4<a name="8"></a></h2><pre class="codeinput">side = 1;
 pos = 4;
 makeMove(g,pos,side);
 g.showResult
-</pre><pre class="codeoutput">
-.......
-.......
-...X...
-...X...
-...X...
-OOOX...
-
-X wins.
-</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+</pre><pre class="codeoutput">X wins.
+</pre><img vspace="5" hspace="5" src="connectfour_demo_08.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Tic Tac Toe Demo
 % You can play a game manually like this.
@@ -170,43 +106,43 @@ X wins.
 g = ConnectFour;
 g.showBoard;
 
-%% X Move 1
+%% Side 1 Move 1
 side = 1;
 pos = 4;
 makeMove(g,pos,side);
 g.showResult
 
-%% O Move 1
+%% Side 2 Move 1
 side = 2;
 pos = 3;
 makeMove(g,pos,side);
 g.showResult
 
-%% X Move 2
+%% Side 1 Move 2
 side = 1;
 pos = 4;
 makeMove(g,pos,side);
 g.showResult
 
-%% O Move 2
+%% Side 2 Move 2
 side = 2;
 pos = 2;
 makeMove(g,pos,side);
 g.showResult
 
-%% X Move 3
+%% Side 1 Move 3
 side = 1;
 pos = 4;
 makeMove(g,pos,side);
 g.showResult
 
-%% O Move 3
+%% Side 2 Move 3
 side = 2;
 pos = 1;
 makeMove(g,pos,side);
 g.showResult
 
-%% X Move 4
+%% Side 1 Move 4
 side = 1;
 pos = 4;
 makeMove(g,pos,side);
