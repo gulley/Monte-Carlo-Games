@@ -1,4 +1,4 @@
-%% Tic Tac Toe Demo
+%% Connect Four Demo
 % You play robot against robot like this.
 
 %% Initialize

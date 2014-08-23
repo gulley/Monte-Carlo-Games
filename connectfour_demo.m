@@ -1,4 +1,4 @@
-%% Tic Tac Toe Demo
+%% Connect Four Demo
 % You can play a game manually like this.
 
 %% Initialize
