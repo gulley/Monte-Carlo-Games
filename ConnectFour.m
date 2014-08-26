@@ -2,7 +2,7 @@ classdef ConnectFour < handle
     % Connect Four
     % The Connect Four board is managed as a 1x42 vector
     
-    % boardstate:  1x42 vector with 0=empty, 1=X, 2=O
+    % boardstate:  1x42 vector with 0=empty, 1=red, 2=black
     % boardmask:   1x7 vector with logical to indicate open moves
     % poslist:     column vector of board positions (1-7 index into board)
     % pos:         a single position from the poslist

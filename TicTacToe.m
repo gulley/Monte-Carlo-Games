@@ -27,6 +27,67 @@ classdef TicTacToe < handle
             newGame = TicTacToe(game.boardstate);
         end
         
+        function showResult(game)
+            game.showBoard;
+            r = game.isGameOver;
+            if r==1
+                fprintf('X wins.\n')
+            elseif r==2
+                fprintf('O wins.\n')
+            elseif r==3
+                fprintf('Tie game.\n')
+            end
+        end
+        
+        function side = whoseMove(game)
+            % If there are the same number of Xs and Os, then X goes next.
+            if sum(game.boardstate(:)==1) == sum(game.boardstate(:)==2)
+                side = 1;
+            else
+                side = 2;
+            end
+        end
+        
+        function moves = possibleMoves(game)
+            % Where are the legal moves?
+            moves = find(game.boardstate==0);
+        end
+        
+        function makeMove(game, pos, side)
+            if nargin < 3
+                side = 1;
+            end
+            
+            if ~game.boardstate(pos)
+                game.boardstate(pos) = side;
+            else
+                fprintf('That position is occupied. You can''t move there.')
+                game.showBoard;
+                return
+            end
+        end
+        
+        function r = isGameOver(game)
+            
+            ix = [ ...
+                1 4 7 1 2 3 1 3
+                2 5 8 4 5 6 5 5
+                3 6 9 7 8 9 9 7];
+            
+            s = game.boardstate(ix);
+            
+            if any(prod(s==1))
+                r = 1;
+            elseif any(prod(s==2))
+                r = 2;
+            elseif ~any(game.boardstate(:)==0)
+                r = 3;
+            else
+                r = 0;
+            end
+            
+        end
+        
         function showBoard(g,style)
             % Display method
             if nargin < 2
@@ -43,7 +104,7 @@ classdef TicTacToe < handle
         end
         
         function showBoardText(g)
-    b = reshape(g.boardstate,3,3);
+            b = reshape(g.boardstate,3,3);
             
             fprintf('\n');
             for r=1:3
@@ -71,7 +132,7 @@ classdef TicTacToe < handle
                 fprintf('\n');
             end
             fprintf('\n');
-        end % function display
+        end 
         
         function showBoardGraphical(g)
             
@@ -87,7 +148,7 @@ classdef TicTacToe < handle
                         case 2
                             markerStr = 'o';
                             colorStr = 'blue';
-                        otherwise 
+                        otherwise
                             markerStr = 'none';
                             colorStr = 'white';
                     end
@@ -104,67 +165,6 @@ classdef TicTacToe < handle
             box on
             drawnow
             
-        end % function display
-        
-        function showResult(game)
-            game.showBoard;
-            r = game.isGameOver;
-            if r==1
-                fprintf('X wins.\n')
-            elseif r==2
-                fprintf('O wins.\n')
-            elseif r==3
-                fprintf('Tie game.\n')
-            end
-        end
-                
-        function makeMove(game, pos, side)
-            if nargin < 3
-                side = 1;
-            end
-            
-            if ~game.boardstate(pos)
-                game.boardstate(pos) = side;
-            else
-                fprintf('That position is occupied. You can''t move there.')
-                game.showBoard;
-                return
-            end
-        end
-        
-        function moves = possibleMoves(game)
-            % Where are the legal moves?            
-            moves = find(game.boardstate==0);            
-        end
-        
-        function r = isGameOver(game)
-            
-            ix = [ ...
-                1 4 7 1 2 3 1 3
-                2 5 8 4 5 6 5 5
-                3 6 9 7 8 9 9 7];
-            
-            s = game.boardstate(ix);
-            
-            if any(prod(s==1))
-                r = 1;
-            elseif any(prod(s==2))
-                r = 2;
-            elseif ~any(game.boardstate(:)==0)
-                r = 3;
-            else
-                r = 0;
-            end
-            
-        end
-        
-        function side = whoseMove(game)
-            % If there are the same number of Xs and Os, then X goes next.
-            if sum(game.boardstate(:)==1) == sum(game.boardstate(:)==2)
-                side = 1;
-            else
-                side = 2;
-            end
         end
         
     end

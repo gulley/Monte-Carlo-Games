@@ -58,7 +58,7 @@ function rTotals = playManyGames(game,nGames)
     % Output r is a 1x3 vector: [1 wins, 2 wins, draw]
     
     if nargin<2
-        nGames = 50;
+        nGames = 20;
     end
     
     rTotals = [0 0 0];
