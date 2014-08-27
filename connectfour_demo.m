@@ -1,48 +1,29 @@
 %% Connect Four Demo
-% You can play a game manually like this.
+% Initialize
 
-%% Initialize
-g = ConnectFour;
-g.showBoard;
-
-%% Side 1 Move 1
-side = 1;
-pos = 4;
-makeMove(g,pos,side);
+% g = ConnectFour;
+g = ConnectEl;
 g.showResult
 
-%% Side 2 Move 1
-side = 2;
-pos = 3;
-makeMove(g,pos,side);
-g.showResult
+%%
+% Play until one side wins or there's a tie.
+while ~g.isGameOver
+    gamebotMoves(g,10);
+    snapnow
+    
+    if ~g.isGameOver
+        gamebotMoves(g,200);
+        snapnow
+    end
+end
 
-%% Side 1 Move 2
-side = 1;
-pos = 4;
-makeMove(g,pos,side);
-g.showResult
+%%
+% Use this code to play against the robot
 
-%% Side 2 Move 2
-side = 2;
-pos = 2;
-makeMove(g,pos,side);
-g.showResult
+iMove(g,6,1);
+drawnow
 
-%% Side 1 Move 3
-side = 1;
-pos = 4;
-makeMove(g,pos,side);
-g.showResult
+if ~g.isGameOver
+    gamebotMoves(g,10);
+end
 
-%% Side 2 Move 3
-side = 2;
-pos = 1;
-makeMove(g,pos,side);
-g.showResult
-
-%% Side 1 Move 4
-side = 1;
-pos = 4;
-makeMove(g,pos,side);
-g.showResult

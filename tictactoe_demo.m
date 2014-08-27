@@ -2,35 +2,30 @@
 % You can play a game manually like this.
 
 %% Initialize
-g = TicTacToe
+g = TicTacToe;
 g.showResult
 
 %% X Move 1
 side = 1;
 pos = 5;
-makeMove(g,pos,side);
-g.showResult
+iMove(g,pos,side);
 
 %% O Move 1
 pos = 1;
 side = 2;
-makeMove(g,pos,side);
-g.showResult
+iMove(g,pos,side);
 
 %% X Move 2
 pos = 2;
 side = 1;
-makeMove(g,pos,side);
-g.showResult
+iMove(g,pos,side);
 
 %% O Move 2
 pos = 7;
 side = 2;
-makeMove(g,pos,side);
-g.showResult
+iMove(g,pos,side);
 
 %% X Move 3
 pos = 8;
 side = 1;
-makeMove(g,pos,side);
-g.showResult
+iMove(g,pos,side);

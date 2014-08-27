@@ -138,7 +138,7 @@ classdef TicTacToe < handle
             
             b = reshape(g.boardstate,3,3);
             
-            cla
+            clf
             for r=1:3
                 for c=1:3
                     switch b(r,c)
@@ -153,12 +153,13 @@ classdef TicTacToe < handle
                             colorStr = 'white';
                     end
                     line(c-0.5,r-0.5,'Marker',markerStr,'MarkerSize',50, ...
-                        'MarkerEdgeColor',colorStr);
+                        'MarkerEdgeColor',colorStr,'LineWidth',3);
                     
                 end
             end
             axis ij
             axis([0 3 0 3])
+            axis square
             set(gca,'XTick',0:3,'YTick',0:3)
             set(gca,'XTickLabel',[],'YTickLabel',[])
             grid on

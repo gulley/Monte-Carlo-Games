@@ -1,14 +1,16 @@
 %% Tic Tac Toe Demo
-% You play robot against robot like this.
-
-%% Initialize
-g = TicTacToe
-g.showBoard
+% Initialize
+g = TicTacToe;
+g.showResult
 
 %%
-% Repeat this command until one side wins or there's a tie.
+% Play until one side wins or there's a tie.
 while ~g.isGameOver
-    autoMove(g);
-    g.showResult;
+    gamebotMoves(g,100);
     snapnow
+    
+    if ~g.isGameOver
+        gamebotMoves(g,10);
+        snapnow
+    end
 end

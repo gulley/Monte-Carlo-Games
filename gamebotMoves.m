@@ -1,4 +1,6 @@
-function autoMove(game)
+function gamebotMoves(game,ngames)
+    % ngames refers to how many Monte Carlo simulation you want to run for
+    % each potential move.
     
     % Find all the legal moves
     side = game.whoseMove;
@@ -14,24 +16,25 @@ function autoMove(game)
         move = moves;
         
     else
-        move = pickBestMove(game,moves,side);
+        move = pickBestMove(game,moves,side,ngames);
         
     end
     game.makeMove(move,side);
+    game.showResult
     
 end
 
-function pos = pickBestMove(game,poslist,side)
+function pos = pickBestMove(game,poslist,side,ngames)
     
     outcomelist = zeros(length(poslist),3);
-    ngames = 100;
     
     % Iterate across all legal moves
     % At each point, measure how many wins and losses we can expect
     
     len = length(poslist);
     for i = 1:len
-        %         fprintf('%d',i);
+        home
+        %         fprintf('%d\n',i);
         newGame = game.copy; % imagine we make move i
         newGame.makeMove(poslist(i),side);
         r = playManyGames(newGame,ngames);
@@ -53,7 +56,7 @@ function pos = pickBestMove(game,poslist,side)
     pos = poslist(ix(side));
 end
 
-function rTotals = playManyGames(game,nGames)
+function rTotals = playManyGames(game,ngames)
     % From boardstate b0, play random games and report the results.
     % This code should be agnostic to the rules of the game
     % Input b0: the starting board
@@ -61,13 +64,10 @@ function rTotals = playManyGames(game,nGames)
     % Input nGames: how many games to play
     % Output r is a 1x3 vector: [1 wins, 2 wins, draw]
     
-    if nargin<2
-        nGames = 100;
-    end
-    
     rTotals = [0 0 0];
     
-    for i = 1:nGames
+    % Try a parfor here
+    for i = 1:ngames
         newGame = game.copy;
         gameOver = false;
         while ~gameOver
