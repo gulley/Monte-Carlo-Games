@@ -20,7 +20,7 @@ classdef Hex < handle
         % =================================================================
         function g = Hex(initialBoardstate)
             % Constructor
-            nCells = 5;
+            nCells = 9;
             
             if nargin < 1
                 initialBoardstate = zeros(nCells);

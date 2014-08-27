@@ -18,11 +18,11 @@ end
 %%
 % Use this code to play against the robot
 
-% g.makeMove(21);
-% g.showResult;
-% drawnow
-% 
-% if ~g.isGameOver
-%     autoMove(g);
-%     g.showResult;
-% end
+g.makeMove(67);
+g.showResult;
+drawnow
+
+if ~g.isGameOver
+    autoMove(g);
+    g.showResult;
+end

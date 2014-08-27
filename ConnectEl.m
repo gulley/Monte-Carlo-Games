@@ -1,6 +1,8 @@
-classdef ConnectFour < handle
-    % Connect Four
-    % The Connect Four board is managed as a 1x42 vector
+classdef ConnectEl < handle
+    % Connect El
+    % Connect El is just like Connect Four, but to win you need to make the
+    % shape of an L.
+    % The board is managed as a 1x42 vector
     
     % boardstate:  1x42 vector with 0=empty, 1=red, 2=black
     % boardmask:   1x7 vector with logical to indicate open moves
@@ -14,7 +16,7 @@ classdef ConnectFour < handle
     
     methods
         
-        function g = ConnectFour(initialBoardstate)
+        function g = ConnectEl(initialBoardstate)
             % Constructor
             if nargin < 1
                 initialBoardstate = zeros(1,42);
@@ -23,7 +25,7 @@ classdef ConnectFour < handle
         end
         
         function newGame = copy(game)
-            newGame = ConnectFour(game.boardstate);
+            newGame = ConnectEl(game.boardstate);
         end
         
         function showResult(game)
@@ -76,16 +78,39 @@ classdef ConnectFour < handle
             % See http://www.mathworks.com/matlabcentral/cody/problems/90-connect-four-win-checker/solutions/2314
             r = 0;
             directions = { ...
-                [1;1;1;1], ...
-                [1,1,1,1], ...
-                [0 0 0 1
-                0 0 1 0
-                0 1 0 0
-                1 0 0 0], ...
-                [1 0 0 0
-                0 1 0 0
-                0 0 1 0
-                0 0 0 1]};
+                [ ...
+                1 1 0
+                0 1 0
+                0 1 0], ...
+                [ ...
+                0 1 1
+                0 1 0
+                0 1 0], ...
+                [ ...
+                0 1 0
+                0 1 0
+                1 1 0], ...
+                [ ...
+                0 1 0
+                0 1 0
+                0 1 1], ...
+                [ ...
+                0 0 1
+                1 1 1
+                0 0 0], ...
+                [ ...
+                0 0 0
+                1 1 1
+                0 0 1], ...
+                [ ...
+                1 0 0
+                1 1 1
+                0 0 0], ...
+                [ ...
+                0 0 0
+                1 1 1
+                1 0 0] ...
+                };
             for player = 1:2
                 for direction = directions
                     if any(any( conv2(b.*(b==player),direction{1},'same') == 4*player ))

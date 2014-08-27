@@ -29,18 +29,22 @@ function pos = pickBestMove(game,poslist,side)
     % Iterate across all legal moves
     % At each point, measure how many wins and losses we can expect
     
-    for i = 1:length(poslist)
+    len = length(poslist);
+    for i = 1:len
+        %         fprintf('%d',i);
         newGame = game.copy; % imagine we make move i
         newGame.makeMove(poslist(i),side);
         r = playManyGames(newGame,ngames);
         outcomelist(i,:) = r;
     end
+    %     fprintf('\n');
     
     % Column 1 is the number of side 1 wins
     % Column 2 is the number of side 2 wins
     % Column 3 is the number of ties
     % We want to maximize the chance of winning or tying
     % (i.e. minimize the chance of losing).
+    
     outcomelist(:,1) = outcomelist(:,1) + outcomelist(:,3);
     outcomelist(:,2) = outcomelist(:,2) + outcomelist(:,3);
     [~,ix] = max(outcomelist);
@@ -58,7 +62,7 @@ function rTotals = playManyGames(game,nGames)
     % Output r is a 1x3 vector: [1 wins, 2 wins, draw]
     
     if nargin<2
-        nGames = 20;
+        nGames = 100;
     end
     
     rTotals = [0 0 0];
