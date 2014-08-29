@@ -26,25 +26,36 @@ end
 
 function pos = pickBestMove(game,poslist,side,ngames)
     
+    % Column 1 is the number of side 1 wins
+    % Column 2 is the number of side 2 wins
+    % Column 3 is the number of ties
+    
     outcomelist = zeros(length(poslist),3);
     
     % Iterate across all legal moves
     % At each point, measure how many wins and losses we can expect
     
     len = length(poslist);
+    otherSide = toggleSide(side);
+        
     for i = 1:len
-        home
-        %         fprintf('%d\n',i);
-        newGame = game.copy; % imagine we make move i
+        % Defend against quick loss with one move look ahead
+        % Imagine opponent makes move i
+        % Short-circuit and return if you need to block a winning move.
+        newGame = game.copy; 
+        newGame.makeMove(poslist(i),otherSide);
+        if newGame.isGameOver == otherSide
+            pos = poslist(i);
+            return
+        end
+        
+        % Imagine we make move i
+        newGame = game.copy; 
         newGame.makeMove(poslist(i),side);
         r = playManyGames(newGame,ngames);
         outcomelist(i,:) = r;
     end
-    %     fprintf('\n');
     
-    % Column 1 is the number of side 1 wins
-    % Column 2 is the number of side 2 wins
-    % Column 3 is the number of ties
     % We want to maximize the chance of winning or tying
     % (i.e. minimize the chance of losing).
     
@@ -94,3 +105,6 @@ function move = randomMove(game)
     
 end
 
+function sideOut = toggleSide(sideIn)
+    sideOut = 3 - sideIn;
+end
