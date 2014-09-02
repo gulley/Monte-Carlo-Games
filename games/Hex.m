@@ -117,7 +117,7 @@ classdef Hex < handle
             r = 0;
             
         end
-        
+                
         function showBoard(g)
             % Display method
             
@@ -151,7 +151,7 @@ classdef Hex < handle
                     else
                         color = [1 1 1];
                     end
-                       
+                    
                     h(c,r) = patch(xy(:,1)+x, ...
                         xy(:,2)+y,color);
                     

@@ -2,8 +2,8 @@
 % Initialize
 
 % g = ConnectFour;
-% g = ConnectEl;
-g = FourCorners;
+g = ConnectEl;
+% g = FourCorners;
 g.showResult
 
 %%

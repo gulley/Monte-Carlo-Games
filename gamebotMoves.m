@@ -5,7 +5,7 @@ function gamebotMoves(game,ngames)
     % Find all the legal moves
     side = game.whoseMove;
     moves = game.possibleMoves;
-        
+    
     if isempty(moves)
         % No moves are possible.
         fprintf('No moves remain. Game is over.\n')
@@ -37,23 +37,28 @@ function pos = pickBestMove(game,poslist,side,ngames)
     
     len = length(poslist);
     otherSide = toggleSide(side);
-        
+    
+    % parfor i = 1:len
     for i = 1:len
+        
         % Defend against quick loss with one move look ahead
         % Imagine opponent makes move i
         % Short-circuit and return if you need to block a winning move.
-        newGame = game.copy; 
+        newGame = game.copy;
         newGame.makeMove(poslist(i),otherSide);
         if newGame.isGameOver == otherSide
             pos = poslist(i);
-            return
+        else
+            % Imagine we make move i
+            newGame = game.copy;
+            newGame.makeMove(poslist(i),side);
+            
+            % TODO: Add a check here to short-circuit in the case of
+            % immediate victory.
+            
+            r = playManyGames(newGame,ngames);
+            outcomelist(i,:) = r;
         end
-        
-        % Imagine we make move i
-        newGame = game.copy; 
-        newGame.makeMove(poslist(i),side);
-        r = playManyGames(newGame,ngames);
-        outcomelist(i,:) = r;
     end
     
     % We want to maximize the chance of winning or tying
