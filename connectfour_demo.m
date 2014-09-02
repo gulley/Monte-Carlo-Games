@@ -2,8 +2,8 @@
 % Initialize
 
 % g = ConnectFour;
-g = ConnectEl;
-% g = ConnectFourCorners;
+% g = ConnectEl;
+g = FourCorners;
 g.showResult
 
 %%
@@ -24,7 +24,7 @@ end
 iMove(g,1,2);
 drawnow
 
-%
+%%
 
 if ~g.isGameOver
     gamebotMoves(g,200);
