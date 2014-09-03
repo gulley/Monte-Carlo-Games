@@ -1,4 +1,4 @@
-classdef ConnectEl < ConnectFour
+classdef ConnectEl < FourGameBase
     
     methods
         

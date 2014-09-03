@@ -1,4 +1,4 @@
-classdef ConnectFour < handle
+classdef ConnectFour < FourGameBase
     % Connect Four
     % The Connect Four board is managed as a  6x7 matrix
     
@@ -7,10 +7,6 @@ classdef ConnectFour < handle
     % poslist:     column vector of board positions (1-7 index into board)
     % pos:         a single position from the poslist
     % outcomelist: associates wins and ties with each possible move
-    
-    properties
-        boardstate
-    end
     
     methods
         
@@ -23,51 +19,7 @@ classdef ConnectFour < handle
         end
         
         function newGame = copy(game)
-            newGame = ConnectFour(game.boardstate);
-        end
-        
-        function showResult(game)
-            game.showBoard;
-            r = game.isGameOver;
-            if r==1
-                fprintf('Red wins.\n')
-            elseif r==2
-                fprintf('Black wins.\n')
-            elseif r==3
-                fprintf('Tie game.\n')
-            end
-        end
-        
-        function makeMove(game, pos, side)
-            if nargin < 3
-                side = 1;
-            end
-            
-            % The piece is dropped into the Connect Four grid and falls to
-            % the bottom.
-            
-            b = game.boardstate;
-            
-            if prod(b(:,pos))
-                fprintf('That column is full. You can''t move there.')
-                game.showBoard;
-                return
-            end
-            
-            emptySlots = find(b(:,pos)==0);
-            b(emptySlots(end),pos) = side;
-            game.boardstate = b;
-            
-        end
-        
-        function moves = possibleMoves(game)
-            % Where are the legal moves?
-            
-            b = game.boardstate;
-            
-            % Any column that still has empty space in it represents a
-            % legal move.
-            moves = find(prod(b)==0);
+            newGame = FourGameBase(game.boardstate);
         end
         
         function r = isGameOver(game)

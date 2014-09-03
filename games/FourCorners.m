@@ -1,4 +1,4 @@
-classdef FourCorners < ConnectFour
+classdef FourCorners < FourGameBase
     
     methods
         
