@@ -43,20 +43,22 @@ function pos = pickBestMove(game,potentialMoveList,side,nGames)
         
         % Imagine we make move i
         % See a victory one move ahead? Take it now!
-        % Short-circuit and return if you need to win.
+        % Short-circuit and return
         newGame = game.copy;
         newGame.makeMove(potentialMoveList(i),side);
-        if newGame.isGameOver == side
+        result = newGame.isGameOver;
+        if result==side
             pos = potentialMoveList(i);
             return
         end
         
         % Imagine opponent makes move i
-        % See a loss one move ahead? Avoid it now!
-        % Short-circuit and return if you need to block a winning move.
+        % See a defeat one move ahead? Block it now!
+        % Short-circuit and return
         newGame = game.copy;
         newGame.makeMove(potentialMoveList(i),otherSide);
-        if newGame.isGameOver == otherSide
+        result = newGame.isGameOver;
+        if result==otherSide
             pos = potentialMoveList(i);
             return
         end
