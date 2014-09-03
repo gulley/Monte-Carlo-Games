@@ -19,7 +19,7 @@ classdef ConnectFour < FourGameBase
         end
         
         function newGame = copy(game)
-            newGame = FourGameBase(game.boardstate);
+            newGame = ConnectFour(game.boardstate);
         end
         
         function r = isGameOver(game)
