@@ -3,14 +3,13 @@
 g = TicTacToe;
 g.showResult
 
-%%
-% Play until one side wins or there's a tie.
+% Two robots play until the game is over
 while ~g.isGameOver
-    gamebotMoves(g,100);
+    gamebotMoves(g,200);
     snapnow
     
     if ~g.isGameOver
-        gamebotMoves(g,10);
+        gamebotMoves(g,200);
         snapnow
     end
 end

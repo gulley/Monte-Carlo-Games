@@ -6,10 +6,10 @@ classdef TicTacToe < handle
     
     methods
         % Tic Tac Toe
-        % The Tic Tac Toe board is managed as a 1x9 vector
+        % The Tic Tac Toe board is managed as a 3x3 matrix
         
-        % boardstate:  1x9 vector with 0=empty, 1=X, 2=O
-        % boardmask:   1x9 vector with logical to indicate open moves
+        % boardstate:  3x3 matrix with 0=empty, 1=X, 2=O
+        % boardmask:   3x3 matrix with logical to indicate open moves
         % poslist:     column vector of board positions (1-9 index into board)
         % pos:         a single position from the poslist
         % outcomelist: associates wins and ties with each possible move
@@ -18,7 +18,7 @@ classdef TicTacToe < handle
         function g = TicTacToe(initialBoardstate)
             % Constructor
             if nargin < 1
-                initialBoardstate = zeros(1,9);
+                initialBoardstate = zeros(3,3);
             end
             g.boardstate = initialBoardstate;
         end
@@ -104,7 +104,7 @@ classdef TicTacToe < handle
         end
         
         function showBoardText(g)
-            b = reshape(g.boardstate,3,3);
+            b = g.boardstate;
             
             fprintf('\n');
             for r=1:3
@@ -136,7 +136,7 @@ classdef TicTacToe < handle
         
         function showBoardGraphical(g)
             
-            b = reshape(g.boardstate,3,3);
+            b = g.boardstate;
             
             clf
             for r=1:3

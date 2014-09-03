@@ -24,52 +24,69 @@ function gamebotMoves(game,ngames)
     
 end
 
-function pos = pickBestMove(game,poslist,side,ngames)
+function pos = pickBestMove(game,potentialMoveList,side,nGames)
     
-    % Column 1 is the number of side 1 wins
-    % Column 2 is the number of side 2 wins
-    % Column 3 is the number of ties
+    nPotentialMoves = length(potentialMoveList);
+    outcomelist = zeros(nPotentialMoves,3);
+    % outcomelist has three columns and as many rows as there are potential
+    % moves
+    %   column 1 is the number of side 1 wins
+    %   column 2 is the number of side 2 wins
+    %   column 3 is the number of ties
     
-    outcomelist = zeros(length(poslist),3);
-    
-    % Iterate across all legal moves
+    % Iterate across all potential moves
     % At each point, measure how many wins and losses we can expect
     
-    len = length(poslist);
     otherSide = toggleSide(side);
     
-    % parfor i = 1:len
-    for i = 1:len
+    for i = 1:nPotentialMoves
         
-        % Defend against quick loss with one move look ahead
+        % Imagine we make move i
+        % See a victory one move ahead? Take it now!
+        % Short-circuit and return if you need to win.
+        newGame = game.copy;
+        newGame.makeMove(potentialMoveList(i),side);
+        if newGame.isGameOver == side
+            pos = potentialMoveList(i);
+            return
+        end
+        
         % Imagine opponent makes move i
+        % See a loss one move ahead? Avoid it now!
         % Short-circuit and return if you need to block a winning move.
         newGame = game.copy;
-        newGame.makeMove(poslist(i),otherSide);
+        newGame.makeMove(potentialMoveList(i),otherSide);
         if newGame.isGameOver == otherSide
-            pos = poslist(i);
-        else
-            % Imagine we make move i
-            newGame = game.copy;
-            newGame.makeMove(poslist(i),side);
-            
-            % TODO: Add a check here to short-circuit in the case of
-            % immediate victory.
-            
-            r = playManyGames(newGame,ngames);
-            outcomelist(i,:) = r;
+            pos = potentialMoveList(i);
+            return
         end
+        
+        % Imagine we make move i
+        newGame = game.copy;
+        newGame.makeMove(potentialMoveList(i),side);
+        
+        % See a victory one move ahead? Take it now!
+        % Short-circuit and return if you need to block a winning move.
+        if newGame.isGameOver == side
+            pos = poslist(i);
+            return
+        end
+        
+        r = playManyGames(newGame,nGames);
+        outcomelist(i,:) = r;
+        
     end
-    
     % We want to maximize the chance of winning or tying
     % (i.e. minimize the chance of losing).
     
     outcomelist(:,1) = outcomelist(:,1) + outcomelist(:,3);
     outcomelist(:,2) = outcomelist(:,2) + outcomelist(:,3);
     [~,ix] = max(outcomelist);
-    
+        
     % Pick the most favorable outcome
-    pos = poslist(ix(side));
+    pos = potentialMoveList(ix(side));
+    
+    
 end
 
 function rTotals = playManyGames(game,ngames)

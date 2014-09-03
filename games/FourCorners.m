@@ -2,8 +2,20 @@ classdef FourCorners < ConnectFour
     
     methods
         
+        function g = FourCorners(initialBoardstate)
+            % Constructor
+            if nargin < 1
+                initialBoardstate = zeros(6,7);
+            end
+            g.boardstate = initialBoardstate;
+        end
+        
+        function newGame = copy(game)
+            newGame = FourCorners(game.boardstate);
+        end
+        
         function r = isGameOver(game)
-            b = reshape(game.boardstate,6,7);
+            b = game.boardstate;
             
             % Code courtesy of Alfonso Nieto-Castanon
             % See http://www.mathworks.com/matlabcentral/cody/problems/512-spot-the-rectangle/solutions/63821

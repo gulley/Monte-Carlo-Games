@@ -2,6 +2,18 @@ classdef ConnectEl < ConnectFour
     
     methods
         
+        function g = ConnectEl(initialBoardstate)
+            % Constructor
+            if nargin < 1
+                initialBoardstate = zeros(6,7);
+            end
+            g.boardstate = initialBoardstate;
+        end
+        
+        function newGame = copy(game)
+            newGame = ConnectEl(game.boardstate);
+        end
+        
         function r = isGameOver(game)
             b = reshape(game.boardstate,6,7);
             

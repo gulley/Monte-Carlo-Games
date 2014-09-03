@@ -1,8 +1,8 @@
 classdef ConnectFour < handle
     % Connect Four
-    % The Connect Four board is managed as a 1x42 vector
+    % The Connect Four board is managed as a  6x7 matrix
     
-    % boardstate:  1x42 vector with 0=empty, 1=red, 2=black
+    % boardstate:  6x7 matrix with 0=empty, 1=red, 2=black
     % boardmask:   1x7 vector with logical to indicate open moves
     % poslist:     column vector of board positions (1-7 index into board)
     % pos:         a single position from the poslist
@@ -17,7 +17,7 @@ classdef ConnectFour < handle
         function g = ConnectFour(initialBoardstate)
             % Constructor
             if nargin < 1
-                initialBoardstate = zeros(1,42);
+                initialBoardstate = zeros(6,7);
             end
             g.boardstate = initialBoardstate;
         end
@@ -46,7 +46,7 @@ classdef ConnectFour < handle
             % The piece is dropped into the Connect Four grid and falls to
             % the bottom.
             
-            b = reshape(game.boardstate,6,7);
+            b = game.boardstate;
             
             if prod(b(:,pos))
                 fprintf('That column is full. You can''t move there.')
@@ -56,21 +56,22 @@ classdef ConnectFour < handle
             
             emptySlots = find(b(:,pos)==0);
             b(emptySlots(end),pos) = side;
-            game.boardstate = b(:);
+            game.boardstate = b;
             
         end
         
         function moves = possibleMoves(game)
             % Where are the legal moves?
             
-            b = reshape(game.boardstate,6,7);
+            b = game.boardstate;
+            
             % Any column that still has empty space in it represents a
             % legal move.
             moves = find(prod(b)==0);
         end
         
         function r = isGameOver(game)
-            b = reshape(game.boardstate,6,7);
+            b = game.boardstate;
             
             % Code courtesy of @bmtran
             % See http://www.mathworks.com/matlabcentral/cody/problems/90-connect-four-win-checker/solutions/2314
@@ -110,10 +111,85 @@ classdef ConnectFour < handle
             end
         end
         
-        function showBoard(g,style)
+        function showBoard(game,style)
             % Display method
-            board = reshape(g.boardstate,6,7);
-            drawConnectFourBoard(board)
+            board = game.boardstate;
+            game.drawConnectFourBoard
+        end
+        
+        function drawConnectFourBoard(game,style)
+            board = game.boardstate;
+            % Display method
+            if nargin < 2
+                % style='text';
+                style='graphical';
+            end
+            
+            if strcmp(style,'text')
+                game.showBoardText
+            elseif strcmp(style,'graphical')
+                game.showBoardGraphical
+            end
+            
+        end
+        
+        function showBoardText(game)
+            board = game.boardstate;
+            fprintf('\n');
+            for r=1:6
+                
+                for c=1:7
+                    switch board(r,c)
+                        case 1
+                            str = 'R';
+                        case 2
+                            str = 'B';
+                        otherwise
+                            str = '.';
+                    end
+                    
+                    fprintf('%s',str);
+                    
+                end
+                fprintf('\n');
+            end
+            fprintf('\n');
+        end % function display
+        
+        function showBoardGraphical(game)
+            board = game.boardstate;
+            
+            clf
+            for r=1:6
+                for c=1:7
+                    switch board(r,c)
+                        case 1
+                            markerStr = '.';
+                            colorStr = 'red';
+                        case 2
+                            markerStr = '.';
+                            colorStr = 'black';
+                        otherwise
+                            markerStr = 'none';
+                            colorStr = 'white';
+                            if r==6
+                                text(c-0.5,r-0.5,num2str(c))
+                            elseif board(r+1,c)
+                                text(c-0.5,r-0.5,num2str(c))
+                            end
+                    end
+                    line(c-0.5,r-0.5,'Marker',markerStr,'MarkerSize',90,'MarkerEdgeColor',colorStr);
+                    
+                end
+            end
+            axis ij
+            axis([0 7 0 6])
+            set(gca,'XTick',0:7,'YTick',0:6)
+            set(gca,'XTickLabel',[],'YTickLabel',[])
+            grid on
+            box on
+            drawnow
+            
         end
         
     end
