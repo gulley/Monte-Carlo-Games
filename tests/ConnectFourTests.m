@@ -32,3 +32,18 @@ assert(g.whoseMove==1)
 moves = g.possibleMoves;
 assert(isequal(moves,[2 3 5 6]))
 
+%% Speed Round
+
+g = ConnectFour;
+
+% Two robots play until the game is over
+nGamesSide1 = 1;
+nGamesSide2 = 1;
+while ~g.isGameOver
+    gamebotMoves(g,nGamesSide1);
+    
+    if ~g.isGameOver
+        gamebotMoves(g,nGamesSide2);
+    end
+end
+
