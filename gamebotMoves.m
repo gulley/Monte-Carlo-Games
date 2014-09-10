@@ -1,5 +1,6 @@
 function gamebotMoves(game,nGames)
-    % nGames refers to how many Monte Carlo simulation you want to run for
+    % game is a class
+    % nGames refers to how many Monte Carlo simulations you want to run for
     % each potential move.
     
     % Find all the legal moves
@@ -45,6 +46,11 @@ function pos = pickBestMove(game,potentialMoveList,mySide,nGames)
     otherSide = toggleSide(mySide);
     
     for i = 1:nPotentialMoves
+        
+        verbose = false;
+        if verbose
+            fprintf('%04.1f %%\n',100*i/nPotentialMoves);
+        end
         
         % Victory Short-Circuit
         % Imagine we make move i

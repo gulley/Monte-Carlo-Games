@@ -32,15 +32,10 @@ classdef FourGameBase < handle
         end
         
         function makeMove(game, pos, side)
-            if nargin < 3
-                side = 1;
-            end
-            
             % The piece is dropped into the Connect Four grid and falls to
             % the bottom.
-            
+
             b = game.boardstate;
-            % bh = game.boardhistory;
             
             if prod(b(:,pos))
                 fprintf('That column is full. You can''t move there.')
@@ -50,10 +45,8 @@ classdef FourGameBase < handle
             
             emptySlots = find(b(:,pos)==0);
             b(emptySlots(end),pos) = side;
-            % bh(emptySlots(end),pos) = nnz(b);
            
             game.boardstate = b;
-            % game.boardhistory = bh;
            
         end
         
