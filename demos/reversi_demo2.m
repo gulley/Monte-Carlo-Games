@@ -5,13 +5,12 @@ g = Reversi;
 g.showResult
 
 % You play the robot
-nGamesSide2 = 50;
+nGamesSide2 = 20;
 
 %%
 
-move = 35;
-g.makeMove(move,1)
-g.showResult
+move = 18;
+iMove(g,move,2)
 
 if ~g.isGameOver
     gamebotMoves(g,nGamesSide2);

@@ -1,8 +1,8 @@
 %% Connect Four Demo
 % Initialize
 
-% g = ConnectFour;
-g = ConnectEl;
+g = ConnectFour;
+% g = ConnectEl;
 % g = FourCorners;
 g.showResult
 
@@ -16,3 +16,13 @@ while ~g.isGameOver
         gamebotMoves(g,nGamesSide2);
     end
 end
+
+%%
+g = ConnectFour;
+% g = ConnectEl;
+% g = FourCorners;
+g.showBoard
+
+%%
+
+gamebotMoves(g,100);

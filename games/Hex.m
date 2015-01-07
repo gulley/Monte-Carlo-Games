@@ -5,7 +5,7 @@ classdef Hex < handle
     end
     
     properties (Constant = true)
-        adj = makeHexAdjMatrix(9)
+        adj = makeHexAdjMatrix(7)
     end
     
     methods

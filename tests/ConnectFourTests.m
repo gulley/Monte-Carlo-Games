@@ -2,12 +2,12 @@
 % Black plays to block
 
 g = ConnectFour;
-g.boardstate = zeros(6,7);
-g.boardstate(6,:) = [1 1 1 0 2 0 2];
+g.board = zeros(6,7);
+g.board(6,:) = [1 1 1 0 2 0 2];
 g.showBoard
 assert(g.whoseMove==2)
-gamebotMoves(g,1)
-assert(g.boardstate(6,4)==2)
+gamebotMoves(g,1000)
+assert(g.board(6,4)==2)
 
 %% Imminent Victory Short-Circuit
 % Red plays to win
