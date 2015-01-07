@@ -1,47 +1,28 @@
 classdef TicTacToe < handle
+    % Tic Tac Toe
+    % The board is managed as a 3x3 matrix
     
     properties
-        boardstate
+        board
     end
     
     methods
-        % Tic Tac Toe
-        % The Tic Tac Toe board is managed as a 3x3 matrix
         
-        % boardstate:  3x3 matrix with 0=empty, 1=X, 2=O
-        % boardmask:   3x3 matrix with logical to indicate open moves
-        % poslist:     column vector of board positions (1-9 index into board)
-        % pos:         a single position from the poslist
-        % outcomelist: associates wins and ties with each possible move
-        
-        % =================================================================
-        function g = TicTacToe(initialBoardstate)
+        function g = TicTacToe(initialBoard)
             % Constructor
             if nargin < 1
-                initialBoardstate = zeros(3,3);
+                initialBoard = zeros(3,3);
             end
-            g.boardstate = initialBoardstate;
+            g.board = initialBoard;
         end
         
         function newGame = copy(game)
-            newGame = TicTacToe(game.boardstate);
-        end
-        
-        function showResult(game)
-            game.showBoard;
-            r = game.isGameOver;
-            if r==1
-                fprintf('X wins.\n')
-            elseif r==2
-                fprintf('O wins.\n')
-            elseif r==3
-                fprintf('Tie game.\n')
-            end
+            newGame = TicTacToe(game.board);
         end
         
         function side = whoseMove(game)
-            % If there are the same number of Xs and Os, then X goes next.
-            if sum(game.boardstate(:)==1) == sum(game.boardstate(:)==2)
+            % If there are an even number of pieces, X goes next
+            if rem(nnz(game.board),2)==0
                 side = 1;
             else
                 side = 2;
@@ -50,113 +31,108 @@ classdef TicTacToe < handle
         
         function moves = possibleMoves(game)
             % Where are the legal moves?
-            moves = find(game.boardstate==0);
+            moves = find(game.board==0);
         end
         
         function makeMove(game, pos, side)
-            if nargin < 3
-                side = 1;
-            end
             
-            if ~game.boardstate(pos)
-                game.boardstate(pos) = side;
+            if ~game.board(pos)
+                game.board(pos) = side;
             else
                 fprintf('That position is occupied. You can''t move there.')
                 game.showBoard;
-                return
             end
         end
         
-        function r = isGameOver(game)
+        function result = isGameOver(game)
+            % result = 0 => Game is not over.
+            % result = 1 => Side 1 wins.
+            % result = 2 => Side 2 wins.
+            % result = 3 => Board is full. Game is a draw.
             
             ix = [ ...
                 1 4 7 1 2 3 1 3
                 2 5 8 4 5 6 5 5
                 3 6 9 7 8 9 9 7];
             
-            s = game.boardstate(ix);
+            s = game.board(ix);
             
             if any(prod(s==1))
-                r = 1;
+                result = 1;
             elseif any(prod(s==2))
-                r = 2;
-            elseif ~any(game.boardstate(:)==0)
-                r = 3;
+                result = 2;
+            elseif ~any(game.board(:)==0)
+                result = 3;
             else
-                r = 0;
+                result = 0;
             end
             
         end
         
-        function showBoard(g,style)
-            % Display method
+        function showBoard(game, possibleMoves, winnerCounts)
+            
             if nargin < 2
-                % style='text';
-                style='graphical';
+                possibleMoves = game.possibleMoves;
+                winnerCounts = [];
             end
             
-            if strcmp(style,'text')
-                showBoardText(g)
-            elseif strcmp(style,'graphical')
-                showBoardGraphical(g)
-            end
+            vMax = max(winnerCounts);
+            vMin = min(winnerCounts);
+            b = game.board;
             
-        end
-        
-        function showBoardText(g)
-            b = g.boardstate;
+            % In each box...
+            % hm - a marker to be used for a game piece
+            % ht - text used for position index or rating
             
-            fprintf('\n');
-            for r=1:3
-                
-                if r>1
-                    fprintf('-----------\n');
-                end
-                
-                for c=1:3
-                    switch b(r,c)
-                        case 1
-                            str = 'X';
-                        case 2
-                            str = 'O';
-                        otherwise
-                            str = ' ';
-                    end
-                    
-                    if c>1
-                        fprintf('|');
-                    end
-                    fprintf(' %s ',str);
-                    
-                end
-                fprintf('\n');
-            end
-            fprintf('\n');
-        end 
-        
-        function showBoardGraphical(g)
-            
-            b = g.boardstate;
+            hMarker = zeros(size(b));
+            hText = zeros(size(b));
             
             clf
-            for r=1:3
-                for c=1:3
-                    switch b(r,c)
-                        case 1
-                            markerStr = 'x';
-                            colorStr = 'black';
-                        case 2
-                            markerStr = 'o';
-                            colorStr = 'blue';
-                        otherwise
-                            markerStr = 'none';
-                            colorStr = 'white';
-                    end
-                    line(c-0.5,r-0.5,'Marker',markerStr,'MarkerSize',50, ...
-                        'MarkerEdgeColor',colorStr,'LineWidth',3);
-                    
+            for r=1:size(b,1)
+                for c=1:size(b,2)
+                    hMarker(r,c) = line(c-0.5,r-0.5, ...
+                        'LineStyle','none','LineWidth',3, ...
+                        'MarkerEdgeColor','none', ...
+                        'MarkerFaceColor','none', ...
+                        'MarkerSize',50);
+                    hText(r,c) = text(c-0.2,r-0.2,'', ...
+                        'HorizontalAlignment','center');
                 end
             end
+            
+            for i = 1:length(possibleMoves)
+                if isempty(winnerCounts)
+                    num = possibleMoves(i);
+                    numStr = sprintf('%d',num);
+                    set(hText(possibleMoves(i)),'String',numStr)
+                else
+                    num = winnerCounts(i);
+                    numStr = sprintf('%d',num);
+                    
+                    set(hText(possibleMoves(i)), ...
+                        'String',numStr)
+                    if vMax > vMin
+                        interpVal = interp1([vMin vMax],[0 0.5],num);
+                        set(hText(possibleMoves(i)), ...
+                            'BackgroundColor', 1-[0 interpVal interpVal])
+                    end
+                end
+            end
+            
+            markerStr = 'x';
+            edgecolor = [0 0 0];
+            set(hMarker(b==1), ...
+                'Marker',markerStr, ...
+                'MarkerEdgeColor',edgecolor, ...
+                'LineWidth',3);
+            
+            markerStr = 'o';
+            edgecolor = [0 0 1];
+            set(hMarker(b==2), ...
+                'Marker',markerStr, ...
+                'MarkerEdgeColor',edgecolor, ...
+                'LineWidth',3);
+                        
             axis ij
             axis([0 3 0 3])
             axis square
@@ -166,8 +142,17 @@ classdef TicTacToe < handle
             box on
             drawnow
             
+            result = game.isGameOver;
+            if result==1
+                title('X wins')
+            elseif result==2
+                title('O wins')
+            elseif result==3
+                title('Tie game')
+            end
+
         end
         
     end
     
-end % classdef
+end 
