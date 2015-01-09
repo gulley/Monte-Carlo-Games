@@ -4,15 +4,15 @@
 gameType = 2;
 switch gameType
     case 1
-        g = ConnectFour;
+        game = ConnectFour;
     case 2
-        g = ConnectEl;
+        game = ConnectEl;
     case 3
-        g = ConnectTee;
+        game = ConnectTee;
     case 4
-        g = FourCorners;
+        game = FourCorners;
 end
-g.showResult
+game.showResult
 
 %%
 % Use this code to play against the robot. 
@@ -20,10 +20,10 @@ g.showResult
 
 mySide = 1;
 myMove = 6;
-iMove(g,myMove,mySide);
+iMove(game,myMove,mySide);
 drawnow 
 
-if ~g.isGameOver
-    botMoves(g,200);
+if ~game.isGameOver
+    botMoves(game,200);
 end
 

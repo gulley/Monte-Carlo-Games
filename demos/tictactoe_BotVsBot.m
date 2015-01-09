@@ -1,19 +1,18 @@
-%% Tic Tac Toe Demo
+%% TicTacToe Demo
 % Initialize
-g = TicTacToe;
-g.showBoard
+
+game = TicTacToe;
+game.showBoard
 
 % Two robots play until the game is over
-nGames1 = 1000;
-nGames2 = 1000;
-while ~g.isGameOver
-    botMoves(g,nGames1);
-    snapnow
-    
-    if ~g.isGameOver
-        botMoves(g,nGames2);
-    end
-    snapnow
-    
-end
+nGamesSide1 = 1000;
+nGamesSide2 = 1000;
 
+while ~game.isGameOver
+    botMoves(game,nGamesSide1);
+    
+    if ~game.isGameOver
+        botMoves(game,nGamesSide2);
+    end
+        
+end

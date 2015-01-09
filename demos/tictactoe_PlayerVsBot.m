@@ -1,19 +1,19 @@
 %% Connect Four Demo
 % Initialize
 
-g = TicTacToe;
-g.showBoard
+game = TicTacToe;
+game.showBoard
 
 %%
 % Use this code to play against the robot. 
 % Update your move and evaluate this section of code until one side wins.
 
 mySide = 1;
-myMove = 1;
-iMove(g,myMove,mySide);
+myMove = 8;
+iMove(game,myMove,mySide);
 drawnow 
 
-if ~g.isGameOver
-    botMoves(g,1000);
+if ~game.isGameOver
+    botMoves(game,10);
 end
 

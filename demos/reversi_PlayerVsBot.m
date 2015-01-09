@@ -1,8 +1,8 @@
 %% Reversi Demo
 % Initialize
 
-g = Reversi;
-g.showResult
+game = Reversi;
+game.showResult
 
 % You play the robot
 nGamesSide = 20;
@@ -10,8 +10,8 @@ nGamesSide = 20;
 %%
 
 move = 18;
-iMove(g,move,2)
+iMove(game,move,2)
 
-if ~g.isGameOver
-    botMoves(g,nGamesSide);
+if ~game.isGameOver
+    botMoves(game,nGamesSide);
 end
