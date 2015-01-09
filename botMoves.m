@@ -1,11 +1,11 @@
-function gamebotMoves(game,nGames)
+function botMoves(game,nGames)
     % game:   a class
     % nGames: number of random simulated game to run for each potential move.
     
     % Find all the legal moves
     moves = game.possibleMoves;
     side = game.whoseMove;
-    winnerCounts = [];
+    resultCounts = [];
     
     if isempty(moves)
         % No moves are possible.
@@ -18,22 +18,23 @@ function gamebotMoves(game,nGames)
         
     else
         % More than one move is possible. Which is the best one?
-        winnerCounts = ratePossibleMoves(game,moves,side,nGames);
+        resultCounts = ratePossibleMoves(game,moves,side,nGames);
         
-        % Maximize likelihood of victory
-        %         winnerCounts = winnerCounts(:,side) + winnerCounts(:,3);
-        winnerCounts = winnerCounts(:,side);
-        [~,ix] = max(winnerCounts);
+        % Maximize likelihood of not losing (i.e. maximize victory + draw)
+        resultCountsNoLose = resultCounts(:,side) + resultCounts(:,3);
+        
+        % Or maximize likelihood of victory only (ignore draws)
+        resultCountsWinOnly = resultCounts(:,side);
+        
+        [~,ix] = max(resultCountsNoLose);
         
         move = moves(ix);
         
     end
     
     game.makeMove(move,side);
-    winnerCounts = [];
-    game.showBoard(moves,winnerCounts)
-    %     game.showBoard(moves)
-    
+    game.showBoard
+
 end
 
 function winnerCounts = ratePossibleMoves(game,possibleMoveList,mySide,nGames)
@@ -80,8 +81,7 @@ end
 function move = randomMove(game)
     % Pick exactly one of the legal moves
     moves = game.possibleMoves;
-    move = moves(ceil(rand*length(moves)));
-    
+    move = moves(ceil(rand*length(moves)));    
 end
 
 function sideOut = toggleSide(sideIn)
