@@ -1,26 +1,25 @@
 classdef Reversi < handle
-    % Reversi (a.k.a. Othello)
+    % Reversi (also known as Othello)
     
     properties
-        boardstate
+        board
     end
     
     methods
         
-        % =================================================================
-        function g = Reversi(initialBoardstate)
+        function g = Reversi(initialboard)
             % Constructor
             if nargin < 1
                 n = 6;
                 nHalf = n/2;
-                initialBoardstate = zeros(n);
-                initialBoardstate((0:1)+n/2,(0:1)+n/2) = [1 2; 2 1];
+                initialboard = zeros(n);
+                initialboard((0:1)+n/2,(0:1)+n/2) = [1 2; 2 1];
             end
-            g.boardstate = initialBoardstate;
+            g.board = initialboard;
         end
         
         function newGame = copy(game)
-            newGame = Reversi(game.boardstate);
+            newGame = Reversi(game.board);
         end
         
         function showResult(game)
@@ -37,7 +36,7 @@ classdef Reversi < handle
         
         function side = whoseMove(game)
             % If there are the same number of Xs and Os, then X goes next.
-            if ~rem(nnz(game.boardstate),2)
+            if ~rem(nnz(game.board),2)
                 side = 1;
             else
                 side = 2;
@@ -46,7 +45,7 @@ classdef Reversi < handle
         
         function moves = possibleMoves(game)
             % Where are the legal moves?
-            b = game.boardstate;
+            b = game.board;
             s = game.whoseMove;
             
             % This code courtesy of Tim
@@ -76,7 +75,7 @@ classdef Reversi < handle
             % Code courtesy of Jan Orwat
             % http://www.mathworks.com/matlabcentral/cody/problems/2565-determine-the-result-of-a-move-in-reversi/solutions/498034
             
-            board = game.boardstate;
+            board = game.board;
             
             borders=size(board);
             ind=@(SUBS)sub2ind(borders,SUBS(1),SUBS(2));
@@ -101,8 +100,8 @@ classdef Reversi < handle
                 end
             end
             
-            game.boardstate = board;
-
+            game.board = board;
+            
         end
         
         function r = isGameOver(game)
@@ -114,7 +113,7 @@ classdef Reversi < handle
                 return
             end
             
-            board = game.boardstate;
+            board = game.board;
             nBlack = sum(board(:)==1);
             nWhite = sum(board(:)==2);
             
@@ -130,7 +129,7 @@ classdef Reversi < handle
         
         function showBoard(game)
             
-            board = game.boardstate;
+            board = game.board;
             sz = size(board);
             n = sz(1);
             m = game.possibleMoves;
@@ -152,10 +151,10 @@ classdef Reversi < handle
                             if ismember(ix,m)
                                 text(c-0.5,r-0.5,num2str(ix), ...
                                     'Color',0.5*[1 1 1], ...
-                                    'FontSize',24,'FontWeight','bold', ...
+                                    'FontSize',18,'FontWeight','bold', ...
                                     'HorizontalAlignment','center')
                             end
-
+                            
                     end
                     line(c-0.5,r-0.5,'Marker',markerStr,'MarkerSize',30, ...
                         'MarkerEdgeColor',0.5*[1 1 1],'MarkerFaceColor',colorStr);
@@ -174,8 +173,6 @@ classdef Reversi < handle
             
         end
         
-        
     end
     
-
-end % classdef
+end

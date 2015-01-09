@@ -1,10 +1,10 @@
-classdef ConnectEl < FourGameBase
-        % Connect El
-        % The first player to four pieces in an L shape wins.
+classdef ConnectTee < FourGameBase
+    % Connect Tee
+    % The first player to four pieces in a T shape wins.
 
     methods
         
-        function g = ConnectEl(initialboard)
+        function g = ConnectTee(initialboard)
             % Constructor
             if nargin < 1
                 initialboard = zeros(6,7);
@@ -13,7 +13,7 @@ classdef ConnectEl < FourGameBase
         end
         
         function newGame = copy(game)
-            newGame = ConnectEl(game.board);
+            newGame = ConnectTee(game.board);
         end
         
         function result = isGameOver(game)
@@ -24,37 +24,21 @@ classdef ConnectEl < FourGameBase
             result = 0;
             directions = { ...
                 [ ...
+                0 1 0
                 1 1 0
-                0 1 0
                 0 1 0], ...
                 [ ...
+                0 1 0
                 0 1 1
-                0 1 0
                 0 1 0], ...
                 [ ...
                 0 1 0
-                0 1 0
-                1 1 0], ...
-                [ ...
-                0 1 0
-                0 1 0
-                0 1 1], ...
-                [ ...
-                0 0 1
                 1 1 1
                 0 0 0], ...
                 [ ...
                 0 0 0
                 1 1 1
-                0 0 1], ...
-                [ ...
-                1 0 0
-                1 1 1
-                0 0 0], ...
-                [ ...
-                0 0 0
-                1 1 1
-                1 0 0] ...
+                0 1 0] ...
                 };
             for player = 1:2
                 for direction = directions
@@ -73,4 +57,4 @@ classdef ConnectEl < FourGameBase
         
     end
     
-end 
+end

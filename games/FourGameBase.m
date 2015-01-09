@@ -6,7 +6,6 @@ classdef FourGameBase < handle
     
     properties
         board
-        % boardhistory
     end
     
     methods
@@ -70,6 +69,9 @@ classdef FourGameBase < handle
             
             if nargin < 2
                 possibleMoves = game.possibleMoves;
+            end
+            
+            if nargin < 3
                 winnerCounts = [];
             end
             
@@ -154,4 +156,4 @@ classdef FourGameBase < handle
         
     end
     
-end % classdef
+end

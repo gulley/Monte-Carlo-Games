@@ -35,6 +35,7 @@ classdef TicTacToe < handle
         end
         
         function makeMove(game, pos, side)
+            % Update the board to reflect the indicated move
             
             if ~game.board(pos)
                 game.board(pos) = side;
@@ -69,20 +70,14 @@ classdef TicTacToe < handle
             
         end
         
-        function showBoard(game, possibleMoves, winnerCounts)
+        function showBoard(game)
             
-            if nargin < 2
-                possibleMoves = game.possibleMoves;
-                winnerCounts = [];
-            end
-            
-            vMax = max(winnerCounts);
-            vMin = min(winnerCounts);
+            possibleMoves = game.possibleMoves;           
             b = game.board;
             
             % In each box...
             % hm - a marker to be used for a game piece
-            % ht - text used for position index or rating
+            % ht - text used for position index
             
             hMarker = zeros(size(b));
             hText = zeros(size(b));
@@ -96,27 +91,15 @@ classdef TicTacToe < handle
                         'MarkerFaceColor','none', ...
                         'MarkerSize',50);
                     hText(r,c) = text(c-0.2,r-0.2,'', ...
+                        'Color',0.5*[1 1 1], ...
                         'HorizontalAlignment','center');
                 end
             end
             
             for i = 1:length(possibleMoves)
-                if isempty(winnerCounts)
-                    num = possibleMoves(i);
-                    numStr = sprintf('%d',num);
-                    set(hText(possibleMoves(i)),'String',numStr)
-                else
-                    num = winnerCounts(i);
-                    numStr = sprintf('%d',num);
-                    
-                    set(hText(possibleMoves(i)), ...
-                        'String',numStr)
-                    if vMax > vMin
-                        interpVal = interp1([vMin vMax],[0 0.5],num);
-                        set(hText(possibleMoves(i)), ...
-                            'BackgroundColor', 1-[0 interpVal interpVal])
-                    end
-                end
+                num = possibleMoves(i);
+                numStr = sprintf('%d',num);
+                set(hText(possibleMoves(i)),'String',numStr)
             end
             
             markerStr = 'x';
