@@ -60,6 +60,13 @@ function whoWins = playManyGames(game,nGames)
     
     whoWins = [0 0 0];
     
+    % Is the game is already over?
+    winner = game.isGameOver;
+    if winner
+        whoWins(winner) = nGames;
+        return
+    end
+    
     for i = 1:nGames
         randGame = game.copy;
         gameOver = false;
