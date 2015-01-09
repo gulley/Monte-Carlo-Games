@@ -21,21 +21,8 @@ classdef Reversi < handle
         function newGame = copy(game)
             newGame = Reversi(game.board);
         end
-        
-        function showResult(game)
-            game.showBoard;
-            r = game.isGameOver;
-            if r==1
-                fprintf('Black wins.\n')
-            elseif r==2
-                fprintf('White wins.\n')
-            elseif r==3
-                fprintf('Tie game.\n')
-            end
-        end
-        
+                
         function side = whoseMove(game)
-            % If there are the same number of Xs and Os, then X goes next.
             if ~rem(nnz(game.board),2)
                 side = 1;
             else
@@ -151,7 +138,7 @@ classdef Reversi < handle
                             if ismember(ix,m)
                                 text(c-0.5,r-0.5,num2str(ix), ...
                                     'Color',0.5*[1 1 1], ...
-                                    'FontSize',18,'FontWeight','bold', ...
+                                    'FontSize',15, ...
                                     'HorizontalAlignment','center')
                             end
                             
@@ -170,6 +157,15 @@ classdef Reversi < handle
             box on
             axis square
             drawnow
+            
+            result = game.isGameOver;
+            if result==1
+                title('Black wins')
+            elseif result==2
+                title('White wins')
+            elseif result==3
+                title('Tie game')
+            end
             
         end
         
