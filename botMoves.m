@@ -30,6 +30,11 @@ function botMoves(game,nGames)
         
         move = moves(ix);
         
+        showRatingsFlag = true;
+        if showRatingsFlag
+            showRatings(side, resultCounts, moves, ix)
+        end
+        
     end
     
     game.makeMove(move,side);
@@ -93,4 +98,29 @@ end
 
 function sideOut = toggleSide(sideIn)
     sideOut = 3 - sideIn;
+end
+
+function showRatings(side, resultCounts, moves, ix)
+    
+    fprintf('\nSIDE %d TO MOVE\n',side);
+    if side==1
+        fprintf('   Move    Wins    Loses    Tie\n')
+    else
+        fprintf('   Move   Loses     Wins    Tie\n')
+    end
+    fprintf('  ------  ------  ------  ------\n')
+    for i = 1:length(moves)
+        if i==ix
+            str1 = ' >';
+            str2 = '< ';
+        else
+            str1 = '  ';
+            str2 = '  ';
+        end
+        fprintf('%s%5d.  %6d  %6d  %6d %s\n', ...
+            str1, moves(i), ...
+            resultCounts(i,1), resultCounts(i,2), resultCounts(i,3), ...
+            str2)
+    end
+    fprintf('  ------  ------  ------  ------\n')
 end
