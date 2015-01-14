@@ -5,8 +5,8 @@ game = Reversi;
 game.showBoard
 
 % Two robots play until the game is over
-nGamesSide1 = 10;
-nGamesSide2 = 10;
+nGamesSide1 = 20;
+nGamesSide2 = 20;
 
 while ~game.isGameOver
     botMoves(game,nGamesSide1);

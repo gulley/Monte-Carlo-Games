@@ -1,7 +1,7 @@
 %% Connect Four Robot vs. Robot
 % Initialize
 
-gameType = 1;
+gameType = 3;
 switch gameType
     case 1
         game = ConnectFour;
@@ -16,8 +16,8 @@ end
 game.showResult
 
 % Two robots play until the game is over
-nGamesSide1 = 200;
-nGamesSide2 = 200;
+= 500;
+nGamesSide2 = 500;
 while ~game.isGameOver
     botMoves(game,nGamesSide1);
     
