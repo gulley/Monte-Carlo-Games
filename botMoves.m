@@ -30,7 +30,7 @@ function botMoves(game,nGames)
         
         move = moves(ix);
         
-        showRatingsFlag = true;
+        showRatingsFlag = false;
         if showRatingsFlag
             showRatings(side, resultCounts, moves, ix)
         end
@@ -104,9 +104,9 @@ function showRatings(side, resultCounts, moves, ix)
     
     fprintf('\nSIDE %d TO MOVE\n',side);
     if side==1
-        fprintf('   Move    Wins    Loses    Tie\n')
+        fprintf('   Move    Wins    Loses    Ties\n')
     else
-        fprintf('   Move   Loses     Wins    Tie\n')
+        fprintf('   Move   Loses     Wins    Ties\n')
     end
     fprintf('  ------  ------  ------  ------\n')
     for i = 1:length(moves)
