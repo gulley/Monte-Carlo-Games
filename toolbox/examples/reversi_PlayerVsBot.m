@@ -2,15 +2,15 @@
 % Initialize
 
 game = Reversi;
-game.showResult
+game.showBoard
 
 % You play the robot
-nGamesSide = 20;
+nGamesSide = 100;
 
 %%
 
-move = 18;
-iMove(game,move,2)
+move = 8;
+iMove(game,move,1)
 
 if ~game.isGameOver
     botMoves(game,nGamesSide);
